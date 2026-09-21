@@ -13,11 +13,9 @@ module statistics_unit
     output logic [31:0] max
 );
 
-    logic [31:0] counter;
+    logic [15:0] counter;
     logic [32:0] summator_ext;
     logic [31:0] summator;
-    logic [31:0] min;
-    logic [31:0] max;
 
     always_ff @(posedge clk) begin : count_ff
         if (!rst_n) begin
@@ -29,12 +27,12 @@ module statistics_unit
         end
 
         else if (valid_in) begin
-            counter <= counter + 32'b1;
+            counter <= (&counter) ? '1 : counter + 16'b1;
         end
     end
 
     always_comb begin : sum_ext
-        summator_ext = summator + data_in
+        summator_ext = summator + data_in;
     end
 
     always_ff @(posedge clk) begin : sum_ff
@@ -67,16 +65,19 @@ module statistics_unit
 
     always_ff @(posedge clk) begin : min_ff
         if (!rst_n) begin
-            min <= '0;
+            min <= '1;
         end
 
         else if (clear) begin
-            min <= '0;
+            min <= '1;
         end
         
         else if (valid_in) begin
-            min <= (min < data_in) ? data_in : min;
+            min <= (min > data_in) ? data_in : min;
         end
     end
+
+    assign sum   = summator;
+    assign count = counter;
 
 endmodule
