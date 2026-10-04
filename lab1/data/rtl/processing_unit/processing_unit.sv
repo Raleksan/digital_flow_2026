@@ -18,7 +18,7 @@ module processing_unit
 	wire [31:0] mul_res = data_a * data_b;
 	wire [31:0] xor_res = data_a ^ data_b;
 
-	always_ff (posedge clk) begin : valid_ff
+	always_ff @(posedge clk) begin : valid_ff
 		if (!rst_n) begin
 			valid_out <= '0;
 		end else begin
@@ -26,7 +26,7 @@ module processing_unit
 		end
 	end
 
-	always_ff (posedge clk) begin : valid_ff 
+	always_ff @(posedge clk) begin : valid_ff 
 		if (!rst_n) begin
 			result <= '0;
 		end else if (valid_in) begin
