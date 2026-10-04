@@ -48,7 +48,7 @@ SIM_FILES_statistics_unit_tb = \
 	$(RTL_DIR)/statistics_unit/tb/statistics_unit_tb.sv
 
 SIM_FILES_processing_unit_tb = \
-	$(RTL_STATISTICS_UNIT) \
+	$(RTL_PROCESSING_UNIT) \
 	$(RTL_DIR)/processing_unit/tb/processing_unit_tb.sv
 
 # TODO: processing_system_tb
