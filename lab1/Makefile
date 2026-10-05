@@ -31,11 +31,10 @@ RTL_PROCESSING_UNIT = \
 	$(RTL_DIR)/processing_unit/processing_pkg.sv \
 	$(RTL_DIR)/processing_unit/processing_unit.sv
 
-# TODO: processing_system
-# RTL_PROCESSING_SYSTEM = \
-# 	$(RTL_PROCESSING_UNIT) \
-# 	$(RTL_STATISTICS_UNIT) \
-# 	$(RTL_DIR)/processing_system/processing_system.sv
+RTL_PROCESSING_SYSTEM = \
+	$(RTL_PROCESSING_UNIT) \
+ 	$(RTL_STATISTICS_UNIT) \
+ 	$(RTL_DIR)/processing_system/processing_system.sv
 
 # Files of each testbench: SIM_FILES_<testbench top>
 
@@ -51,10 +50,9 @@ SIM_FILES_processing_unit_tb = \
 	$(RTL_PROCESSING_UNIT) \
 	$(RTL_DIR)/processing_unit/tb/processing_unit_tb.sv
 
-# TODO: processing_system_tb
-# SIM_FILES_processing_system_tb = \
-# 	$(RTL_PROCESSING_SYSTEM) \
-# 	$(RTL_DIR)/processing_system/tb/processing_system_tb.sv
+SIM_FILES_processing_system_tb = \
+ 	$(RTL_PROCESSING_SYSTEM) \
+ 	$(RTL_DIR)/processing_system/tb/processing_system_tb.sv
 
 
 # ============================================================
