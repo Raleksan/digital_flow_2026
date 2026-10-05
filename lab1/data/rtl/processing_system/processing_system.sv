@@ -22,8 +22,8 @@ module processing_system (
     output logic        range_exceeded
 );
 
-	wire proc_stat_valid;
-	wire proc_stat_data;
+	logic        proc_stat_valid;
+	logic [31:0] proc_stat_data;
 
 	processing_unit inst_processing_unit (
    		.clk       (clk),
