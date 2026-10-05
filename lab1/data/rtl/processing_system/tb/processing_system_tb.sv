@@ -187,76 +187,66 @@ module processing_system_tb;
         logic        rand_valid;
         logic [15:0] rand_data_a;
         logic [15:0] rand_data_b;
-        logic [ 1:0] rand_operation;
+        operation_e  rand_operation;
+        logic        rand_clear;
         logic [31:0] rand_range_limit;
+
         logic [31:0] expected_result;
 
-        repeat (TEST_NUM) begin
-            // Step 1. Stimulus randomization
-            assert(std::randomize(
-                rand_valid,
-                rand_data_a,
-                rand_data_b,
-                rand_operation,
-                rand_range_limit
-            ) with {
-                rand_valid dist {
-                    1'b1 := 80,
-                    1'b0 := 20
-                };
-            })
-            else begin
-                $fatal(1, "Randomization failed");
-            end
-
-            // Calculate expected result
-            expected_result = calculate_result(
-                rand_data_a,
-                rand_data_b,
-                rand_operation
-            );
-
-            // Step 2. Drive inputs on the falling edge so that
-            // they are stable before the next rising edge
-            @(negedge clk);
-
-            valid_in   = rand_valid;
-            data_a     = rand_data_a;
-            data_b     = rand_data_b;
-            operation  = rand_operation;
-            range_limit = rand_range_limit;
-
-            // Step 3. Wait DUT's response
-            repeat(2) @(posedge clk);
-
-            // Step 4. Comparation
-            check_value(result_valid, rand_valid, "result_valid");
-
-            if (rand_valid && (result !== expected_result)) begin
-                $error(
-                    "result mismatch: "
-                    "A=16'h%04h B=16'h%04h OP=%b "
-                    "actual=32'h%08h expected=32'h%08h",
-                    rand_data_a,
-                    rand_data_b,
-                    rand_operation,
-                    result,
-                    expected_result
-                );
-                error_count++;
-            end
-
-            // Statistics unit receives the result
-            // on the next positive edge.
-            @(negedge clk);
-            valid_in = 1'b0;
-
-            if (rand_valid) begin
-                update_statistics(expected_result);
-            end
-
-            check_statistics();
+        // Step 1. Generate transaction
+        assert(std::randomize(
+            rand_valid,
+            rand_data_a,
+            rand_data_b,
+            rand_operation,
+            rand_clear,
+            rand_range_limit
+        ) with {
+            rand_valid dist { 1'b1 := 50, 1'b0 := 50 };
+        })
+        else begin
+            $fatal("Randomization failed");
         end
+
+        // Calculate expected result
+        expected_result = calculate_result(
+            rand_data_a,
+            rand_data_b,
+            rand_operation
+        );
+
+        // Step 2. Drive inputs
+        @(negedge clk);
+        valid_in    = rand_valid;
+        data_a      = rand_data_a;
+        data_b      = rand_data_b;
+        operation   = rand_operation;
+        clear       = rand_clear;
+        range_limit = rand_range_limit;
+
+        // Step 3. Wait for processing result
+        @(posedge clk);
+        @(negedge clk);
+
+        // Step 4. Compare
+        check_value(result_valid, rand_valid, "result_valid");
+
+        if (rand_valid) begin
+            check_value(result, expected_result, "result");
+        end
+
+        // Update reference model
+        if (rand_clear) begin
+            reset_reference();
+        end else if (rand_valid) begin
+            update_statistics(expected_result);
+        end
+
+        // Check statistics
+        check_statistics();
+
+        // Step 5. End input pulse
+        valid_in = 1'b0;
     endtask : test_random_operations
 
     // ------------------------------------------------------------------------
