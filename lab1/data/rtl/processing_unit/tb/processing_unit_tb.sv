@@ -4,6 +4,10 @@ module processing_unit_tb;
     localparam int unsigned CLOCK_PERIOD = 10;
     localparam int unsigned RESET_DELAY  = 100;
 
+    // ------------------------------------------
+    // DUT connection
+    // ------------------------------------------
+
     logic        clk;
     logic        rst_n;
 
@@ -15,10 +19,6 @@ module processing_unit_tb;
     logic        valid_out;
     logic [31:0] result;
 
-    // ------------------------------------------
-    // DUT connection
-    // ------------------------------------------
-
     processing_unit DUT (
         .clk       (clk),
         .rst_n     (rst_n),
@@ -29,15 +29,6 @@ module processing_unit_tb;
         .valid_out (valid_out),
         .result    (result)
     );
-
-    // ------------------------------------------
-    // Clock
-    // ------------------------------------------
-
-    initial begin
-        clk = 0;
-        forever #(CLOCK_PERIOD / 2) clk = ~clk;
-    end
 
     // ------------------------------------------
     // Monitor
@@ -54,6 +45,15 @@ module processing_unit_tb;
             valid_out,
             result
         );
+    end
+
+    // ------------------------------------------
+    // Clock
+    // ------------------------------------------
+
+    initial begin
+        clk = 0;
+        forever #(CLOCK_PERIOD / 2) clk = ~clk;
     end
 
     // ------------------------------------------
@@ -81,7 +81,6 @@ module processing_unit_tb;
         input logic [15:0] b,
         input operation_e  op
     );
-
         case (op)
             SUM: calculate_result = a + b;
             SUB: calculate_result = a - b;
@@ -90,7 +89,6 @@ module processing_unit_tb;
 
             default: calculate_result = '0;
         endcase
-
     endfunction : calculate_result
 
     // ------------------------------------------
@@ -101,7 +99,6 @@ module processing_unit_tb;
         input int unsigned num,
         input operation_e  op
     );
-
         bit        rand_valid;
         bit [15:0] rand_data_a;
         bit [15:0] rand_data_b;
@@ -114,7 +111,7 @@ module processing_unit_tb;
         $display("==========================================");
 
         for (int i = 0; i < num; i++) begin
-
+            // Step 1. Stimulus randomization
             assert(std::randomize(
                 rand_valid,
                 rand_data_a,
@@ -129,14 +126,15 @@ module processing_unit_tb;
                 $fatal(1, "Randomization failed");
             end
 
+            // Calculate expected result
             expected_result = calculate_result(
                 rand_data_a,
                 rand_data_b,
                 op
             );
 
-            // Drive inputs on the falling edge so that
-            // they are stable before the next rising edge.
+            // Step 2. Drive inputs on the falling edge so that
+            // they are stable before the next rising edge
             @(negedge clk);
 
             valid_in  <= rand_valid;
@@ -144,8 +142,10 @@ module processing_unit_tb;
             data_b    <= rand_data_b;
             operation <= op;
 
+            // Step 3. Wait DUT's response
             repeat(2) @(posedge clk);
 
+            // Step 4. Comparation
             if (valid_out !== rand_valid) begin
                 $error(
                     "valid_out mismatch: expected = %b, actual = %b",
@@ -165,9 +165,7 @@ module processing_unit_tb;
                     result
                 );
             end
-
         end
-
     endtask : test_operation
 
     // ------------------------------------------
@@ -175,12 +173,12 @@ module processing_unit_tb;
     // ------------------------------------------
 
     task test_reset();
-
         $display("");
         $display("==========================================");
         $display("Testing reset");
         $display("==========================================");
 
+        // Step 1. Drive stimulus
         @(negedge clk);
 
         rst_n     <= 1'b0;
@@ -189,8 +187,10 @@ module processing_unit_tb;
         data_b    <= '0;
         operation <= '0;
 
+        // Step 2. Wait DUT's response
         repeat(2) @(posedge clk);
 
+        // Step 3. Comparation
         if (valid_out !== 1'b0) begin
             $error(
                 "Reset failed: valid_out = %b, expected = 0",
@@ -205,9 +205,9 @@ module processing_unit_tb;
             );
         end
 
+        // Step 4. Recovery
         @(negedge clk);
         rst_n <= 1'b1;
-
     endtask : test_reset
 
     // ------------------------------------------
@@ -216,15 +216,13 @@ module processing_unit_tb;
 
     initial begin
         wait (rst_n === 1'b1);
-
         @(posedge clk);
-
-        test_reset();
 
         test_operation(100, SUM);
         test_operation(100, SUB);
         test_operation(100, XOR);
         test_operation(100, MUL);
+        test_reset();
 
         $display("");
         $display("==========================================");
