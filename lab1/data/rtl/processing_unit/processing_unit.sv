@@ -26,7 +26,7 @@ module processing_unit
 		end
 	end
 
-	always_ff @(posedge clk) begin : valid_ff 
+	always_ff @(posedge clk) begin : result_ff 
 		if (!rst_n) begin
 			result <= '0;
 		end else if (valid_in) begin
