@@ -19,7 +19,7 @@ module processing_unit_tb;
     // DUT connection
     // ------------------------------------------
 
-    processing_unit_wrapper DUT (
+    processing_unit DUT (
         .clk       (clk),
         .rst_n     (rst_n),
         .valid_in  (valid_in),
@@ -45,9 +45,8 @@ module processing_unit_tb;
 
     initial begin
         $monitor(
+            "%0t | data_a = 'h%h, data_b = 'h%h, operation = 'b%b | valid_in = %b, valid_out = %b, result = 'h%h",
             $time,
-            " | data_a = 'h%h, data_b = 'h%h, operation = 'b%b",
-            " | valid_in = %b, valid_out = %b, result = 'h%h",
             data_a,
             data_b,
             operation,
