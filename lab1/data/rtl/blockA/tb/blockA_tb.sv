@@ -1,5 +1,5 @@
-module processing_unit_tb;
-    import processing_pkg::*;
+module blockA_tb;
+    import blockA_pkg::*;
 
     localparam int unsigned CLOCK_PERIOD = 10;
     localparam int unsigned RESET_DELAY  = 100;
@@ -19,7 +19,7 @@ module processing_unit_tb;
     logic        valid_out;
     logic [31:0] result;
 
-    processing_unit DUT (
+    blockA DUT (
         .clk       (clk),
         .rst_n     (rst_n),
         .valid_in  (valid_in),
@@ -112,19 +112,10 @@ module processing_unit_tb;
 
         for (int i = 0; i < num; i++) begin
             // Step 1. Stimulus randomization
-            assert(std::randomize(
-                rand_valid,
-                rand_data_a,
-                rand_data_b
-            ) with {
-                rand_valid dist {
-                    1'b1 := 50,
-                    1'b0 := 50
-                };
-            })
-            else begin
-                $fatal(1, "Randomization failed");
-            end
+            // $urandom instead of std::randomize: Verilator does not support it
+            rand_valid  = 1'($urandom_range(0, 1));
+            rand_data_a = 16'($urandom);
+            rand_data_b = 16'($urandom);
 
             // Calculate expected result
             expected_result = calculate_result(

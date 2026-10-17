@@ -19,22 +19,22 @@ VERILATOR = verilator
 # ============================================================
 
 # RTL sources of each block. Blocks that use other blocks list
-# their sources too (see RTL_PROCESSING_SYSTEM).
+# their sources too (see RTL_TOP).
 
 RTL_COUNTER = \
 	$(RTL_DIR)/counter/counter.sv
 
-RTL_STATISTICS_UNIT = \
-	$(RTL_DIR)/statistics_unit/statistics_unit.sv
+RTL_BLOCKB = \
+	$(RTL_DIR)/blockB/blockB.sv
 
-RTL_PROCESSING_UNIT = \
-	$(RTL_DIR)/processing_unit/processing_pkg.sv \
-	$(RTL_DIR)/processing_unit/processing_unit.sv
+RTL_BLOCKA = \
+	$(RTL_DIR)/blockA/blockA_pkg.sv \
+	$(RTL_DIR)/blockA/blockA.sv
 
-RTL_PROCESSING_SYSTEM = \
-	$(RTL_PROCESSING_UNIT) \
- 	$(RTL_STATISTICS_UNIT) \
- 	$(RTL_DIR)/processing_system/processing_system.sv
+RTL_TOP = \
+	$(RTL_BLOCKA) \
+ 	$(RTL_BLOCKB) \
+ 	$(RTL_DIR)/top/top.sv
 
 # Files of each testbench: SIM_FILES_<testbench top>
 
@@ -42,17 +42,17 @@ SIM_FILES_counter_tb = \
 	$(RTL_COUNTER) \
 	$(RTL_DIR)/counter/counter_tb.sv
 
-SIM_FILES_statistics_unit_tb = \
-	$(RTL_STATISTICS_UNIT) \
-	$(RTL_DIR)/statistics_unit/tb/statistics_unit_tb.sv
+SIM_FILES_blockB_tb = \
+	$(RTL_BLOCKB) \
+	$(RTL_DIR)/blockB/tb/blockB_tb.sv
 
-SIM_FILES_processing_unit_tb = \
-	$(RTL_PROCESSING_UNIT) \
-	$(RTL_DIR)/processing_unit/tb/processing_unit_tb.sv
+SIM_FILES_blockA_tb = \
+	$(RTL_BLOCKA) \
+	$(RTL_DIR)/blockA/tb/blockA_tb.sv
 
-SIM_FILES_processing_system_tb = \
- 	$(RTL_PROCESSING_SYSTEM) \
- 	$(RTL_DIR)/processing_system/tb/processing_system_tb.sv
+SIM_FILES_top_tb = \
+ 	$(RTL_TOP) \
+ 	$(RTL_DIR)/top/tb/top_tb.sv
 
 
 # ============================================================
@@ -60,7 +60,7 @@ SIM_FILES_processing_system_tb = \
 # ============================================================
 
 # Testbench to run: make sim_verilator SIM_TOP=counter_tb
-SIM_TOP ?= processing_system_tb
+SIM_TOP ?= top_tb
 
 # Extra files from the command line: make sim EXTRA_FILES=...
 EXTRA_FILES ?=

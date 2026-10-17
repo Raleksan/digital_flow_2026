@@ -1,4 +1,4 @@
-module processing_system (
+module top (
     input  logic        clk,
     input  logic        rst_n,
 
@@ -25,7 +25,7 @@ module processing_system (
 	logic        proc_stat_valid;
 	logic [31:0] proc_stat_data;
 
-	processing_unit inst_processing_unit (
+	blockA inst_blockA (
    		.clk       (clk),
     	.rst_n     (rst_n),
 
@@ -38,7 +38,7 @@ module processing_system (
     	.result    (proc_stat_data)
 	);
 
-	statistics_unit inst_statistics_unit (
+	blockB inst_blockB (
 		.clk      (clk),
     	.rst_n    (rst_n),
 
@@ -58,4 +58,4 @@ module processing_system (
 	assign range 		  = max - min;
 	assign range_exceeded = range > range_limit;
 
-endmodule : processing_system
+endmodule : top

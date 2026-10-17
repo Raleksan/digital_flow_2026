@@ -1,4 +1,4 @@
-module statistics_unit 
+module blockB 
 (
     input  logic        clk,
     input  logic        rst_n,

@@ -1,5 +1,5 @@
-module processing_system_tb;
-    import processing_pkg::*;
+module top_tb;
+    import blockA_pkg::*;
 
     localparam int unsigned CLK_PERIOD = 10;
     localparam int unsigned RESET_DELAY  = 100;
@@ -33,7 +33,7 @@ module processing_system_tb;
     logic [31:0] range;
     logic        range_exceeded;
 
-    processing_system dut (
+    top dut (
         .clk            (clk),
         .rst_n          (rst_n),
 
@@ -194,19 +194,13 @@ module processing_system_tb;
         logic [31:0] expected_result;
 
         // Step 1. Generate transaction
-        assert(std::randomize(
-            rand_valid,
-            rand_data_a,
-            rand_data_b,
-            rand_operation,
-            rand_clear,
-            rand_range_limit
-        ) with {
-            rand_valid dist { 1'b1 := 50, 1'b0 := 50 };
-        })
-        else begin
-            $fatal("Randomization failed");
-        end
+        // $urandom instead of std::randomize: Verilator does not support it
+        rand_valid       = 1'($urandom_range(0, 1));
+        rand_data_a      = 16'($urandom);
+        rand_data_b      = 16'($urandom);
+        rand_operation   = operation_e'($urandom_range(0, 3));
+        rand_clear       = 1'($urandom);
+        rand_range_limit = $urandom;
 
         // Calculate expected result
         expected_result = calculate_result(
@@ -333,4 +327,4 @@ module processing_system_tb;
         end
         $finish;
     end
-endmodule : processing_system_tb
+endmodule : top_tb
