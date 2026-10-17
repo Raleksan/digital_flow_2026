@@ -60,7 +60,7 @@ SIM_FILES_processing_system_tb = \
 # ============================================================
 
 # Testbench to run: make sim_verilator SIM_TOP=counter_tb
-SIM_TOP ?= statistics_unit_tb
+SIM_TOP ?= processing_system_tb
 
 # Extra files from the command line: make sim EXTRA_FILES=...
 EXTRA_FILES ?=
