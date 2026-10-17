@@ -1,5 +1,5 @@
-module processing_unit 
-	import processing_pkg::*;
+module blockA 
+	import blockA_pkg::*;
 (
 	input  logic        clk,
 	input  logic        rst_n,
@@ -39,4 +39,4 @@ module processing_unit
 		end
 	end
 
-endmodule : processing_unit
+endmodule : blockA

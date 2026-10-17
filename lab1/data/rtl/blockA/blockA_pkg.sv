@@ -1,4 +1,4 @@
-package processing_pkg;
+package blockA_pkg;
 	typedef enum bit [1:0] {
 		SUM = 2'b00,
 		SUB = 2'b01,
