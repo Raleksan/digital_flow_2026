@@ -19,7 +19,8 @@ module top (
     output logic [31:0] max,
 
     output logic [31:0] range,
-    output logic        range_exceeded
+    output logic        range_exceeded,
+    output logic        new_max
 );
 
 	logic        proc_stat_valid;
@@ -51,11 +52,12 @@ module top (
 		.min      (min),
     	.max      (max)
 	);
-	
+
 	assign result_valid   = proc_stat_valid;
 	assign result         = proc_stat_data;
 
-	assign range 		  = max - min;
-	assign range_exceeded = range > range_limit;
+	assign range          = (count == '0) ? '0 : max - min;
+	assign range_exceeded = (count != '0) && (range > range_limit);
+	assign new_max        = !clear && result_valid && (count == '0 || result > max);
 
 endmodule : top
