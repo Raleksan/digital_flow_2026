@@ -6,12 +6,12 @@ export PDK_DIR     				= $(PWD)/../PDK
 # Design settings
 # ============================================================
 
-export ENV_DESIGN               = counter
-export ENV_DESIGN_DIR           = $(PWD)/data/example_rtl/counter
+export ENV_DESIGN               = blockB
+export ENV_DESIGN_DIR           = $(PWD)/data/blockB
 export ENV_MMMC                 = $(ENV_DESIGN_DIR)/mmmc.view
 export ENV_DEFINE               =
 export ENV_INIT_HDL_SEARCH_PATH = ${ENV_DESIGN_DIR}
-export ENV_RTL_LIST             = $(ENV_DESIGN_DIR)/counter.lst
+export ENV_RTL_LIST             = $(ENV_DESIGN_DIR)/blockB.lst
 # ============================================================
 # Flow
 # ============================================================
@@ -26,7 +26,7 @@ export GENUS_OUTPUT_DIR  = $(GENUS_RUN_DIR)/outputs
 export GENUS_REPORT_DIR  = $(GENUS_RUN_DIR)/reports
 export GENUS_LOG_DIR     = $(GENUS_RUN_DIR)/logs
 export GENUS_LOG    = $(GENUS_LOG_DIR)/synth.log
-export GENUS_OPTS  = 
+export GENUS_OPTS  =
 export GENUS       = genus
 
 # ============================================================
