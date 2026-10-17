@@ -24,7 +24,7 @@ do
 done
 
 ## Определение входных параметров 
-top_name='top_tb'
+top_name='counter_tb'
 
 # FILES="-f <NAME>.f"
 FILES=" ${root_dir}/lab1/data/rtl/counter/counter_tb.sv"

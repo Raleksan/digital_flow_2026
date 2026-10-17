@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module statistics_unit_tb;
+module blockB_tb;
 
     localparam int CLK_PERIOD  = 10;
     localparam int RAND_CYCLES = 10000;
@@ -17,7 +17,7 @@ module statistics_unit_tb;
     logic [31:0] min;
     logic [31:0] max;
 
-    statistics_unit dut (
+    blockB dut (
         .clk      (clk),
         .rst_n    (rst_n),
         .clear    (clear),
@@ -37,8 +37,8 @@ module statistics_unit_tb;
 
     // VCD dump
     initial begin
-        $dumpfile("statistics_unit_tb.vcd");
-        $dumpvars(0, statistics_unit_tb);
+        $dumpfile("blockB_tb.vcd");
+        $dumpvars(0, blockB_tb);
     end
 
     // ========================================================
@@ -219,7 +219,7 @@ module statistics_unit_tb;
         data_in  = '0;
 
         $display("========================================");
-        $display("Starting statistics_unit test");
+        $display("Starting blockB test");
         $display("========================================");
 
         @(negedge clk);
