@@ -32,6 +32,7 @@ module top_tb;
 
     logic [31:0] range;
     logic        range_exceeded;
+    logic        new_max;
 
     top dut (
         .clk            (clk),
@@ -54,7 +55,8 @@ module top_tb;
         .max            (max),
 
         .range          (range),
-        .range_exceeded (range_exceeded)
+        .range_exceeded (range_exceeded),
+        .new_max        (new_max)
     );
 
 
@@ -168,8 +170,8 @@ module top_tb;
         logic        expected_range_exceeded;
         logic [31:0] expected_range;
 
-        expected_range          = ref_max - ref_min;
-        expected_range_exceeded = expected_range > range_limit;
+        expected_range          = (ref_count == '0) ? '0 : ref_max - ref_min;
+        expected_range_exceeded = (ref_count != '0) && (expected_range > range_limit);
 
         check_value(count, ref_count, "count");
         check_value(sum, ref_sum, "sum");
@@ -193,51 +195,69 @@ module top_tb;
 
         logic [31:0] expected_result;
 
-        // Step 1. Generate transaction
-        // $urandom instead of std::randomize: Verilator does not support it
-        rand_valid       = 1'($urandom_range(0, 1));
-        rand_data_a      = 16'($urandom);
-        rand_data_b      = 16'($urandom);
-        rand_operation   = operation_e'($urandom_range(0, 3));
-        rand_clear       = 1'($urandom);
-        rand_range_limit = $urandom;
+        // blockA result waiting to be accepted by blockB on the next posedge
+        logic        pending_valid;
+        logic [31:0] pending_result;
 
-        // Calculate expected result
-        expected_result = calculate_result(
-            rand_data_a,
-            rand_data_b,
-            rand_operation
-        );
+        pending_valid = 1'b0;
 
-        // Step 2. Drive inputs
-        @(negedge clk);
-        valid_in    = rand_valid;
-        data_a      = rand_data_a;
-        data_b      = rand_data_b;
-        operation   = rand_operation;
-        clear       = rand_clear;
-        range_limit = rand_range_limit;
-
-        // Step 3. Wait for processing result
-        @(posedge clk);
+        // each iteration starts and ends on a negedge
         @(negedge clk);
 
-        // Step 4. Compare
-        check_value(result_valid, rand_valid, "result_valid");
+        for (int i = 0; i < TEST_NUM; i++) begin
+            // Step 1. Generate transaction
+            // $urandom instead of std::randomize: Verilator does not support it
+            rand_valid       = 1'($urandom_range(0, 1));
+            rand_data_a      = 16'($urandom);
+            rand_data_b      = 16'($urandom);
+            rand_operation   = operation_e'($urandom_range(0, 3));
+            rand_clear       = ($urandom_range(0, 15) == 0);
+            rand_range_limit = $urandom;
 
-        if (rand_valid) begin
-            check_value(result, expected_result, "result");
+            // Calculate expected result
+            expected_result = calculate_result(
+                rand_data_a,
+                rand_data_b,
+                rand_operation
+            );
+
+            // Step 2. Drive inputs
+            valid_in    = rand_valid;
+            data_a      = rand_data_a;
+            data_b      = rand_data_b;
+            operation   = rand_operation;
+            clear       = rand_clear;
+            range_limit = rand_range_limit;
+
+            // Step 3. On this posedge blockA accepts the operation,
+            // blockB accepts the previous result unless clear is set
+            @(posedge clk);
+            if (rand_clear) begin
+                reset_reference();
+            end else if (pending_valid) begin
+                update_statistics(pending_result);
+            end
+            pending_valid  = rand_valid;
+            pending_result = expected_result;
+
+            @(negedge clk);
+
+            // Step 4. Compare
+            check_value(result_valid, rand_valid, "result_valid");
+
+            if (rand_valid) begin
+                check_value(result, expected_result, "result");
+            end
+
+            // new_max uses the statistics before this result is accepted
+            check_value(
+                new_max,
+                !rand_clear && rand_valid && (ref_count == '0 || expected_result > ref_max),
+                "new_max"
+            );
+
+            check_statistics();
         end
-
-        // Update reference model
-        if (rand_clear) begin
-            reset_reference();
-        end else if (rand_valid) begin
-            update_statistics(expected_result);
-        end
-
-        // Check statistics
-        check_statistics();
 
         // Step 5. End input pulse
         valid_in = 1'b0;
@@ -299,20 +319,20 @@ module top_tb;
     initial begin
         wait (rst_n === 1'b1);
         @(posedge clk);
-        
+
         // Tests
         test_reset();
         test_random_operations();
         test_clear();
         test_clear_priority();
-        
+
         // Finish
         @(negedge clk);
 
         if (error_count == 0) begin
             $display("");
             $display("==========================================");
-            $display(" PROCESSING_SYSTEM TEST PASSED");
+            $display(" TOP TEST PASSED");
             $display(" RANDOM TESTS: %0d", TEST_NUM);
             $display("==========================================");
         end
@@ -320,7 +340,7 @@ module top_tb;
             $display("");
             $display("==========================================");
             $display(
-                " PROCESSING_SYSTEM TEST FAILED: %0d errors",
+                " TOP TEST FAILED: %0d errors",
                 error_count
             );
             $display("==========================================");
