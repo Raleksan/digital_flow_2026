@@ -23,18 +23,12 @@ step_genus_map
 # Step 9.
 step_genus_opt
 # Step 10.
-step_genus_user_out
+step_genus_user_out "out" 
 # Step 11.
-step_genus_user_reports
+step_genus_user_reports "reports"
 
-<<<<<<< HEAD
-=======
-suspend
-
->>>>>>> 72d7ad8157b474e7266685c7945d74c46666fa08
-# LEC
-# Step 12.
-step_genus_lec
+# Step 12. LEC
+step_genus_lec "/home/d.zavarnitsyn/digital_flow_2026/lab2/run/genus/outputs/syn_opt/processing_unit.v"
 
 # ------------------------------------------------------------------------------
 # Finish
