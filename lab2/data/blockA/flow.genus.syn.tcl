@@ -11,17 +11,21 @@ step_genus_global_options
 # Step 3.
 step_genus_read_hdl
 # Step 4.
-step_genus_elaborate
-# Step 5.
 step_genus_read_mmmc
+# Step 5.
+step_genus_elaborate
+suspend
 # Step 6.
 step_genus_init_design
 # Step 7.
 step_genus_gen
+suspend
 # Step 8.
 step_genus_map
+suspend
 # Step 9.
 step_genus_opt
+suspend
 # Step 10.
 step_genus_user_out
 # Step 11.
