@@ -26,36 +26,36 @@ module processing_system (
 	logic [31:0] proc_stat_data;
 
 	processing_unit inst_processing_unit (
-   		.clk       (clk),
-    	.rst_n     (rst_n),
+   	.clk       (clk),
+    .rst_n     (rst_n),
 
-    	.valid_in  (valid_in),
-    	.data_a    (data_a),
+    .valid_in  (valid_in),
+    .data_a    (data_a),
 		.data_b    (data_b),
-    	.operation (operation),
+    .operation (operation),
 
 		.valid_out (proc_stat_valid),
-    	.result    (proc_stat_data)
+    .result    (proc_stat_data)
 	);
 
 	statistics_unit inst_statistics_unit (
 		.clk      (clk),
-    	.rst_n    (rst_n),
+    .rst_n    (rst_n),
 
-    	.clear    (clear),
-    	.valid_in (proc_stat_valid),
-    	.data_in  (proc_stat_data),
+    .clear    (clear),
+    .valid_in (proc_stat_valid),
+    .data_in  (proc_stat_data),
 
-    	.count    (count),
-    	.sum      (sum),
+    .count    (count),
+    .sum      (sum),
 		.min      (min),
-    	.max      (max)
+    .max      (max)
 	);
 	
 	assign result_valid   = proc_stat_valid;
 	assign result         = proc_stat_data;
 
-	assign range 		  = max - min;
-	assign range_exceeded = range > range_limit;
+	assign range = (count == 0) ? 32'b0 : (max - min);
+	assign range_exceeded = (count != 0) && (range > range_limit);
 
 endmodule : processing_system
