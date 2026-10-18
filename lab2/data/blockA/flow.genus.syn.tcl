@@ -14,23 +14,24 @@ step_genus_read_hdl
 step_genus_read_mmmc
 # Step 5.
 step_genus_elaborate
-suspend
 # Step 6.
 step_genus_init_design
 # Step 7.
 step_genus_gen
-suspend
 # Step 8.
 step_genus_map
-suspend
 # Step 9.
 step_genus_opt
-suspend
 # Step 10.
 step_genus_user_out
 # Step 11.
 step_genus_user_reports
 
+<<<<<<< HEAD
+=======
+suspend
+
+>>>>>>> 72d7ad8157b474e7266685c7945d74c46666fa08
 # LEC
 # Step 12.
 step_genus_lec
