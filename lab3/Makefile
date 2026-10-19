@@ -6,9 +6,9 @@ export PDK_DIR     				= $(PWD)/../PDK/
 # Design settings
 # ============================================================
 
-export ENV_DESIGN               = counter
+export ENV_DESIGN               = processing_unit
 export ENV_DESIGN_DIR           = $(PWD)/data/$(ENV_DESIGN)
-export ENV_MMMC                 = $(ENV_DESIGN_DIR)/mmmc.view
+export ENV_MMMC                 = $(ENV_DESIGN_DIR)/mmmc.tcl
 export ENV_DEFINE               =
 export ENV_INIT_HDL_SEARCH_PATH = ${ENV_DESIGN_DIR}
 export ENV_RTL_LIST             = $(ENV_DESIGN_DIR)/$(ENV_DESIGN).lst
