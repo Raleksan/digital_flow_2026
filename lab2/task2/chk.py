@@ -1,8 +1,9 @@
-"""Check of lab 2, task 2: bilinear interpolation over sg13g2_inv_1 tables.
+"""Lab 2, task 2: delays of X -> INV1 -> INV2 -> Y and X -> INV1 -> INV3 -> Z.
 
-Run: python3 chk.py  (prints the results; asserts fail if they drift from the solution)
+X rises, so INV1 falls and INV2/INV3 rise. Run: python3 chk.py
 """
 from bisect import bisect_right
+from collections import namedtuple
 
 # sg13g2_inv_1, TIMING_DELAY_7x7ds1: rows = input transition (ns), columns = load (pF)
 TR_INDEX = [0.0186, 0.0966, 0.174, 0.3294, 0.6408, 1.263, 2.5074]
@@ -45,16 +46,19 @@ FALL_TRANSITION = [
     [0.203753, 0.464283, 0.568951, 0.692645, 0.85734, 1.08762, 1.43131],
 ]
 
-C_IN = 0.0028869  # pin A capacitance, pF
-TR_X = 0.08       # rising input at X, ns
-C_Y, C_Z = 0.03, 0.05
+C_IN = 0.0028869  # pin A, pF
+TR_X = 0.08       # ns
+C_Y = 0.03        # pF
+C_Z = 0.05        # pF
+
+Stage = namedtuple("Stage", "tr_in load delay tr_out")
 
 
 def lookup(table, tr, c):
-    """Bilinear interpolation as in the README: first along load, then along transition."""
+    # first along load, then along transition (same order as in the README)
     i = bisect_right(TR_INDEX, tr) - 1
     j = bisect_right(C_INDEX, c) - 1
-    assert 0 <= i < len(TR_INDEX) - 1 and 0 <= j < len(C_INDEX) - 1, "outside table: extrapolation"
+    assert 0 <= i < len(TR_INDEX) - 1 and 0 <= j < len(C_INDEX) - 1, "outside table"
     a = (tr - TR_INDEX[i]) / (TR_INDEX[i + 1] - TR_INDEX[i])
     b = (c - C_INDEX[j]) / (C_INDEX[j + 1] - C_INDEX[j])
     f1 = table[i][j] + b * (table[i][j + 1] - table[i][j])
@@ -62,26 +66,30 @@ def lookup(table, tr, c):
     return f1 + a * (f2 - f1)
 
 
-def solve(c_inv1):
-    """INV1 output falls (cell_fall), INV2/INV3 outputs rise (cell_rise)."""
-    d1, t1 = lookup(CELL_FALL, TR_X, c_inv1), lookup(FALL_TRANSITION, TR_X, c_inv1)
-    d2, t2 = lookup(CELL_RISE, t1, C_Y), lookup(RISE_TRANSITION, t1, C_Y)
-    d3, t3 = lookup(CELL_RISE, t1, C_Z), lookup(RISE_TRANSITION, t1, C_Z)
-    return {"INV1": (TR_X, c_inv1, d1, t1), "INV2": (t1, C_Y, d2, t2), "INV3": (t1, C_Z, d3, t3)}
+def stage(delay_table, tran_table, tr_in, load):
+    return Stage(tr_in, load, lookup(delay_table, tr_in, load), lookup(tran_table, tr_in, load))
+
+
+def solve(inv1_load):
+    inv1 = stage(CELL_FALL, FALL_TRANSITION, TR_X, inv1_load)
+    inv2 = stage(CELL_RISE, RISE_TRANSITION, inv1.tr_out, C_Y)
+    inv3 = stage(CELL_RISE, RISE_TRANSITION, inv1.tr_out, C_Z)
+    return {"INV1": inv1, "INV2": inv2, "INV3": inv3}
 
 
 def report(title, cells):
     print(f"\n{title}")
     print(f"{'cell':<6}{'tr_in, ns':>11}{'load, pF':>12}{'delay, ns':>12}{'tr_out, ns':>12}")
-    for name, (tr, c, d, t) in cells.items():
-        print(f"{name:<6}{tr:>11.6f}{c:>12.7f}{d:>12.6f}{t:>12.6f}")
-    xy = cells["INV1"][2] + cells["INV2"][2]
-    xz = cells["INV1"][2] + cells["INV3"][2]
+    for name, s in cells.items():
+        print(f"{name:<6}{s.tr_in:>11.6f}{s.load:>12.7f}{s.delay:>12.6f}{s.tr_out:>12.6f}")
+    xy = cells["INV1"].delay + cells["INV2"].delay
+    xz = cells["INV1"].delay + cells["INV3"].delay
     print(f"X->Y = {xy:.6f} ns   X->Z = {xz:.6f} ns   (X->Z slower by {(xz - xy) * 1e3:.2f} ps)")
     return xy, xz
 
 
-branch = solve(2 * C_IN)
-single = solve(C_IN)
-xy, xz = report("With branch (INV1 drives INV2 + INV3)", branch)
-xy0, _ = report("Without INV3 (for comparison)", single)
+branch = solve(2 * C_IN)  # INV1 drives INV2 + INV3
+single = solve(C_IN)      # without INV3
+xy, xz = report("With branch", branch)
+xy0, _ = report("Without INV3", single)
+print(f"\nbranch costs X->Y {(xy - xy0) * 1e3:.2f} ps")
