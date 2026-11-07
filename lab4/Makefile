@@ -6,7 +6,7 @@ export PDK_DIR                  = $(PWD)/../PDK/
 # ============================================================
 # Design settings
 # ============================================================
-export ENV_DESIGN               = s13207
+export ENV_DESIGN               = blockB
 export ENV_DESIGN_DIR           = $(PWD)/data/$(ENV_DESIGN)
 export ENV_MMMC                 = $(ENV_DESIGN_DIR)/mmmc.view
 export ENV_DEFINE               =
@@ -47,8 +47,9 @@ export LEC_FILE                 = $(GENUS_OUTPUT_DIR)/rtl2final.lec.do
 # Innovus Floorplan settings
 # ============================================================
 export TECH_SIZE                = 130
-export ENV_NETLIST              = $(GENUS_OUTPUT_DIR)/syn_opt/$(ENV_DESIGN).v
-export ENV_FLOORPLAN_FILE       = $(ENV_DESIGN_DIR)/floorplan/s13207.fp
+export ENV_NETLIST              = $(ENV_DESIGN_DIR)/netlist/$(ENV_DESIGN).v
+# export ENV_FLOORPLAN_FILE       = $(ENV_DESIGN_DIR)/floorplan/$(ENV_DESIGN)_floorplan_5.fp
+export ENV_FLOORPLAN_FILE       = $(ENV_DESIGN_DIR)/floorplan/$(ENV_DESIGN)_floorplan_4.fp
 export ENV_LEF_FILES            = $(PDK_DIR)/IHP_Open_PDK/sg13g2_stdcell/lef/sg13g2_tech.lef $(PDK_DIR)/IHP_Open_PDK/sg13g2_stdcell/lef/sg13g2_stdcell.lef
 export ENV_POWER_NETS           = VDD
 export ENV_GROUND_NETS          = VSS
@@ -75,7 +76,7 @@ export INNOVUS_OPTS             = -stylus
 # ============================================================
 # Innovus Implementation
 # ============================================================
-export ENV_FILLER_CELLS         = sg13g2_decap_4 sg13g2_decap_4 sg13g2_fill_1
+export ENV_FILLER_CELLS         = sg13g2_decap_4 sg13g2_fill_1
 
 export TOP_CTS_LAYER_name       = Metal5
 export TOP_CTS_LAYER_num        = 5
@@ -95,7 +96,7 @@ export INNOVUS_IMPL_OPTS        = -stylus
 # ============================================================
 # Innovus Debug
 # ============================================================
-export ENV_DB                   = $(PWD)/run/innovus_impl/db/DB.$(ENV_DESIGN_DIR).Route.enc
+export ENV_DB                   = $(INNOVUS_IMPL_RUN_DIR)/db/DB.$(ENV_DESIGN).Route.enc
 export ENV_INNOVUS_DEBUG        = innovus
 export INNOVUS_DEBUG_OPTS       = -stylus
 export INNOVUS_DEBUG_SCRIPT     = $(FLOW_DIR)/flow.innovus.debug.tcl
