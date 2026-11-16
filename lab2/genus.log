@@ -1,0 +1,40 @@
+Cadence Genus(TM) Synthesis Solution.
+Copyright 2022 Cadence Design Systems, Inc. All rights reserved worldwide.
+Cadence and the Cadence logo are registered trademarks and Genus is a trademark
+of Cadence Design Systems, Inc. in the United States and other countries.
+
+[21:49:52.409531] Configured Lic search path (21.01-s002): 5280@srv-eda-01:5280@srv-eda-05:1717@srv-eda-01
+
+Version: 21.14-s082_1, built Thu Jun 23 04:32:08 PDT 2022
+Options: 
+Date:    Sun Oct 18 21:49:52 2026
+Host:    miet-cad-edu (x86_64 w/Linux 3.10.0-1160.119.1.el7.x86_64) (32cores*32cpus*1physical cpu*Common KVM processor 512KB) (132031524KB)
+PID:     10088
+OS:      CentOS Linux release 7.9.2009 (Core)
+
+
+[21:49:52.461266] Periodic Lic check successful
+[21:49:52.461279] Feature usage summary:
+[21:49:52.461279] Genus_Synthesis
+Checking out license: Genus_Synthesis
+
+
+***********************************************************************************************************
+***********************************************************************************************************
+
+
+
+Loading tool scripts...
+Finished loading tool scripts (8 seconds elapsed).
+
+WARNING: This version of the tool is 1578 days old.
+@genus:root: 1> gui
+ambiguous command name "gui": gui_clear_pv gui_clear_sv gui_configure_pi_schematic gui_hide gui_highlight_hier_instances_pv gui_highlight_pv gui_highlight_sv gui_legend gui_open_schematic gui_pv_airline_add gui_pv_airline_delete gui_pv_airline_display gui_pv_airline_raw_add gui_pv_connectivity_airlines gui_pv_display_collection gui_pv_draw_net gui_pv_selection gui_pv_steiner gui_raise gui_redo_pv gui_redraw_pv gui_reset gui_select_highlighted_pv gui_selection gui_show gui_snapshot_pv gui_snapshot_sv gui_sv_get_instance gui_sv_load gui_undo_pv gui_update gui_zoom_fit_pv gui_zoom_fit_sv gui_zoom_pv
+@genus:root: 2> exit
+
+Lic Summary:
+[21:50:12.001304] cdslmd servers: srv-eda-05 srv-eda-01
+[21:50:12.016472] Feature usage summary:
+[21:50:12.154951]   Genus_Synthesis  
+
+Normal exit.

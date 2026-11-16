@@ -1,0 +1,38 @@
+Cadence Genus(TM) Synthesis Solution.
+Copyright 2022 Cadence Design Systems, Inc. All rights reserved worldwide.
+Cadence and the Cadence logo are registered trademarks and Genus is a trademark
+of Cadence Design Systems, Inc. in the United States and other countries.
+
+[21:45:35.409507] Configured Lic search path (21.01-s002): 5280@srv-eda-01:5280@srv-eda-05:1717@srv-eda-01
+
+Version: 21.14-s082_1, built Thu Jun 23 04:32:08 PDT 2022
+Options: 
+Date:    Sun Oct 18 21:45:35 2026
+Host:    miet-cad-edu (x86_64 w/Linux 3.10.0-1160.119.1.el7.x86_64) (32cores*32cpus*1physical cpu*Common KVM processor 512KB) (132031524KB)
+PID:     8314
+OS:      CentOS Linux release 7.9.2009 (Core)
+
+
+[21:45:35.523026] Periodic Lic check successful
+[21:45:35.523038] Feature usage summary:
+[21:45:35.523039] Genus_Synthesis
+Checking out license: Genus_Synthesis
+
+
+***********************************************************************************************************
+***********************************************************************************************************
+
+
+
+Loading tool scripts...
+Finished loading tool scripts (8 seconds elapsed).
+
+WARNING: This version of the tool is 1578 days old.
+@genus:root: 1> exit
+
+Lic Summary:
+[21:46:44.001384] cdslmd servers: srv-eda-05 srv-eda-01
+[21:46:44.016552] Feature usage summary:
+[21:46:44.155031]   Genus_Synthesis  
+
+Normal exit.

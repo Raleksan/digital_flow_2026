@@ -1,0 +1,165 @@
+Cadence Genus(TM) Synthesis Solution.
+Copyright 2022 Cadence Design Systems, Inc. All rights reserved worldwide.
+Cadence and the Cadence logo are registered trademarks and Genus is a trademark
+of Cadence Design Systems, Inc. in the United States and other countries.
+
+[21:27:06.409491] Configured Lic search path (21.01-s002): 5280@srv-eda-01:5280@srv-eda-05:1717@srv-eda-01
+
+Version: 21.14-s082_1, built Thu Jun 23 04:32:08 PDT 2022
+Options: -files /home/d.zavarnitsyn/digital_flow_2026/lab2/data/blockA/flow.genus.syn.tcl 
+Date:    Sun Oct 18 21:27:06 2026
+Host:    miet-cad-edu (x86_64 w/Linux 3.10.0-1160.119.1.el7.x86_64) (32cores*32cpus*1physical cpu*Common KVM processor 512KB) (132031524KB)
+PID:     30718
+OS:      CentOS Linux release 7.9.2009 (Core)
+
+
+[21:27:06.217882] Periodic Lic check successful
+[21:27:06.742175] Feature usage summary:
+[21:27:06.742180] Genus_Synthesis
+Checking out license: Genus_Synthesis
+
+
+***********************************************************************************************************
+***********************************************************************************************************
+
+
+
+Loading tool scripts...
+Finished loading tool scripts (8 seconds elapsed).
+
+#@ Processing -files option
+@genus 1> source /home/d.zavarnitsyn/digital_flow_2026/lab2/data/blockA/flow.genus.syn.tcl
+#@ Begin verbose source /home/d.zavarnitsyn/digital_flow_2026/lab2/data/blockA/flow.genus.syn.tcl
+@file(flow.genus.syn.tcl) 5: source $::env(FLOW_DIR)/steps.genus.tcl
+Sourcing '/home/d.zavarnitsyn/digital_flow_2026/lab2/flow_scripts/steps.genus.tcl' (Sun Oct 18 21:27:14 MSK 2026)...
+#@ Begin verbose source /home/d.zavarnitsyn/digital_flow_2026/lab2/flow_scripts/steps.genus.tcl
+@file(steps.genus.tcl) 2: proc step_genus_gen ...
+@file(steps.genus.tcl) 17: proc step_genus_user_reports ...
+@file(steps.genus.tcl) 30: proc step_genus_user_out ...
+@file(steps.genus.tcl) 40: proc step_genus_opt ...
+@file(steps.genus.tcl) 52: proc step_genus_read_hdl ...
+@file(steps.genus.tcl) 61: proc step_genus_read_mmmc ...
+@file(steps.genus.tcl) 67: proc step_genus_init_design ...
+@file(steps.genus.tcl) 76: proc step_genus_map ...
+@file(steps.genus.tcl) 90: proc step_genus_lec ...
+@file(steps.genus.tcl) 103: proc step_genus_host_info ...
+@file(steps.genus.tcl) 119: proc step_genus_global_options ...
+@file(steps.genus.tcl) 146: proc step_genus_elaborate ...
+#@ End verbose source /home/d.zavarnitsyn/digital_flow_2026/lab2/flow_scripts/steps.genus.tcl
+@file(flow.genus.syn.tcl) 8: step_genus_host_info
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+model name	: Common KVM processor
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+cpu MHz		: 2449.998
+Hostname : miet-cad-edu
+@file(flow.genus.syn.tcl) 10: step_genus_global_options
+  Setting attribute of root '/': 'timing_report_time_unit' = ns
+  Setting attribute of root '/': 'max_cpus_per_server' = 8
+  Setting attribute of root '/': 'syn_generic_effort' = medium
+  Setting attribute of root '/': 'syn_map_effort' = medium
+  Setting attribute of root '/': 'syn_opt_effort' = medium
+  Setting attribute of root '/': 'information_level' = 1
+  Setting attribute of root '/': 'init_hdl_search_path' = /home/d.zavarnitsyn/digital_flow_2026/lab2/data/blockA
+@file(flow.genus.syn.tcl) 12: step_genus_read_hdl
+@file(flow.genus.syn.tcl) 14: step_genus_read_mmmc
+  Setting attribute of root '/': 'is_read_mmmc_flow' = true
+Sourcing '/home/d.zavarnitsyn/digital_flow_2026/lab2/data/blockA/mmmc.tcl' (Sun Oct 18 21:27:14 MSK 2026)...
+#@ Begin verbose source /home/d.zavarnitsyn/digital_flow_2026/lab2/data/blockA/mmmc.tcl
+@file(mmmc.tcl) 4: set lib_list_worst {}
+@file(mmmc.tcl) 6: lappend lib_list_worst " $::env(PDK_DIR)/IHP_Open_PDK/sg13g2_stdcell/lib/sg13g2_stdcell_slow_1p08V_125C.lib"
+@file(mmmc.tcl) 8: create_rc_corner -name worst -temperature {125} -pre_route_res {1} -pre_route_cap {1} -pre_route_clock_res {0} -pre_route_clock_cap {0} -post_route_res {1} -post_route_cap {1} -post_route_cross_cap {1} -post_route_clock_res {0} -post_route_clock_cap {0}
+@file(mmmc.tcl) 9: create_library_set -name worst -timing $lib_list_worst
+@file(mmmc.tcl) 10: create_opcond -name worst -process {1} -voltage {1.08} -temperature {125}
+@file(mmmc.tcl) 11: create_timing_condition -name worst -opcond {worst} -library_sets {worst}
+@file(mmmc.tcl) 12: create_delay_corner -name worst -timing_condition {worst} -rc_corner {worst}
+@file(mmmc.tcl) 17: set lib_list_typ {}
+@file(mmmc.tcl) 19: lappend lib_list_typ  " $::env(PDK_DIR)/IHP_Open_PDK/sg13g2_stdcell/lib/sg13g2_stdcell_typ_1p20V_25C.lib"
+@file(mmmc.tcl) 21: create_rc_corner -name typ -temperature {25} -pre_route_res {1} -pre_route_cap {1} -pre_route_clock_res {0} -pre_route_clock_cap {0} -post_route_res {1} -post_route_cap {1} -post_route_cross_cap {1} -post_route_clock_res {0} -post_route_clock_cap {0}
+@file(mmmc.tcl) 22: create_library_set -name typ -timing $lib_list_typ
+@file(mmmc.tcl) 23: create_opcond -name typ -process {1} -voltage {1.20} -temperature {25}
+@file(mmmc.tcl) 24: create_timing_condition -name typ -opcond {typ} -library_sets {typ}
+@file(mmmc.tcl) 25: create_delay_corner -name typ -timing_condition {typ} -rc_corner {typ}
+@file(mmmc.tcl) 30: set lib_list_best {}
+@file(mmmc.tcl) 32: lappend lib_list_best  " $::env(PDK_DIR)/IHP_Open_PDK/sg13g2_stdcell/lib/sg13g2_stdcell_fast_1p65V_40C.lib"
+@file(mmmc.tcl) 34: create_rc_corner -name best -temperature {40} -pre_route_res {1} -pre_route_cap {1} -pre_route_clock_res {0} -pre_route_clock_cap {0} -post_route_res {1} -post_route_cap {1} -post_route_cross_cap {1} -post_route_clock_res {0} -post_route_clock_cap {0}
+@file(mmmc.tcl) 35: create_library_set -name best -timing $lib_list_best
+Error   : File error. [FILE-100] [create_library_set]
+        : Cannot open file '/home/d.zavarnitsyn/digital_flow_2026/lab2/../PDK/IHP_Open_PDK/sg13g2_stdcell/lib/sg13g2_stdcell_fast_1p65V_40C.lib'. File not found.
+        : Make sure that the file is a readable regular file and has the specified name.
+Error   : An invalid file was specified for a library_set. [LBR-615] [create_library_set]
+        : An invalid value was specified for the '-timing' option when creating the 'best' library_set.
+        : You either specified no file or a non-existing file. Specify an existing file name with the correct format.
+#@ End verbose source /home/d.zavarnitsyn/digital_flow_2026/lab2/data/blockA/mmmc.tcl
+1
+#@ End verbose source /home/d.zavarnitsyn/digital_flow_2026/lab2/data/blockA/flow.genus.syn.tcl
+Failed on read_mmmc
+Encountered problems processing file: /home/d.zavarnitsyn/digital_flow_2026/lab2/data/blockA/flow.genus.syn.tcl
+WARNING: This version of the tool is 1578 days old.
+@genus:root: 2> exit
+
+Lic Summary:
+[21:29:26.001392] cdslmd servers: srv-eda-05 srv-eda-01
+[21:29:26.016560] Feature usage summary:
+[21:29:26.155039]   Genus_Synthesis  
+
+Normal exit.

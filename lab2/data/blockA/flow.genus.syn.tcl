@@ -14,22 +14,21 @@ step_genus_read_hdl
 step_genus_read_mmmc
 # Step 5.
 step_genus_elaborate
-suspend
 # Step 6.
 step_genus_init_design
 # Step 7.
 step_genus_gen
-suspend
 # Step 8.
 step_genus_map
-suspend
 # Step 9.
 step_genus_opt
-suspend
 # Step 10.
-step_genus_user_out
+step_genus_user_out "out" 
 # Step 11.
-step_genus_user_reports
+step_genus_user_reports "reports"
+
+# Step 12. LEC
+step_genus_lec "/home/d.zavarnitsyn/digital_flow_2026/lab2/run/genus/outputs/syn_opt/processing_unit.v"
 
 # ------------------------------------------------------------------------------
 # Finish
