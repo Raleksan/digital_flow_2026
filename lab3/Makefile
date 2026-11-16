@@ -15,7 +15,7 @@ export ENV_RTL_LIST             = $(ENV_DESIGN_DIR)/$(ENV_DESIGN).lst
 # ============================================================
 # Flow
 # ============================================================
-export FLOW_DIR   				= $(PWD)/flow_scripts
+export FLOW_DIR   				      = $(PWD)/flow_scripts
 export GENUS_SCRIPT             = $(FLOW_DIR)/flow.genus.syn.tcl
 export INNOVUS_FP_SCRIPT        = $(FLOW_DIR)/flow.innovus.fp.tcl
 
@@ -26,9 +26,9 @@ export GENUS_RUN_DIR     = $(PWD)/run/genus
 export GENUS_OUTPUT_DIR  = $(GENUS_RUN_DIR)/outputs
 export GENUS_REPORT_DIR  = $(GENUS_RUN_DIR)/reports
 export GENUS_LOG_DIR     = $(GENUS_RUN_DIR)/logs
-export GENUS_LOG    = $(GENUS_LOG_DIR)/synth.log
-export GENUS_OPTS  = 
-export GENUS       = genus
+export GENUS_LOG         = $(GENUS_LOG_DIR)/synth.log
+export GENUS_OPTS        = 
+export GENUS             = genus
 
 # ============================================================
 # LEC settings
@@ -42,7 +42,7 @@ export LEC_FILE  = $(GENUS_OUTPUT_DIR)/rtl2final.lec.do
 # ============================================================
 export TECH_SIZE            = 130
 export ENV_NETLIST          = $(GENUS_OUTPUT_DIR)/syn_opt/$(ENV_DESIGN).v 
-export ENV_FLOORPLAN_FILE   = $(ENV_DESIGN_DIR)/floorplan/counter.fp
+export ENV_FLOORPLAN_FILE   = $(ENV_DESIGN_DIR)/floorplan/$(ENV_DESIGN).fp
 export ENV_LEF_FILES        = $(PDK_DIR)/IHP_Open_PDK/sg13g2_stdcell/lef/sg13g2_tech.lef $(PDK_DIR)/IHP_Open_PDK/sg13g2_stdcell/lef/sg13g2_stdcell.lef
 export ENV_POWER_NETS       = VDD
 export ENV_GROUND_NETS      = VSS
