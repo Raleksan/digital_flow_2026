@@ -29,11 +29,11 @@ create_delay_corner -name typ -timing_condition {typ} -rc_corner {typ}
 # ################
 set lib_list_best {}
 
-lappend lib_list_best  " $::env(PDK_DIR)/IHP_Open_PDK/sg13g2_stdcell/lib/sg13g2_stdcell_fast_1p65V_m40C.lib"
+lappend lib_list_best  " $::env(PDK_DIR)/IHP_Open_PDK/sg13g2_stdcell/lib/sg13g2_stdcell_fast_1p32V_m40C.lib"
 
-create_rc_corner -name best -temperature {40} -pre_route_res {1} -pre_route_cap {1} -pre_route_clock_res {0} -pre_route_clock_cap {0} -post_route_res {1} -post_route_cap {1} -post_route_cross_cap {1} -post_route_clock_res {0} -post_route_clock_cap {0}
+create_rc_corner -name best -temperature {-40} -pre_route_res {1} -pre_route_cap {1} -pre_route_clock_res {0} -pre_route_clock_cap {0} -post_route_res {1} -post_route_cap {1} -post_route_cross_cap {1} -post_route_clock_res {0} -post_route_clock_cap {0}
 create_library_set -name best -timing $lib_list_best
-create_opcond -name best -process {1} -voltage {1.65} -temperature {40}
+create_opcond -name best -process {1} -voltage {1.32} -temperature {-40}
 create_timing_condition -name best -opcond {best} -library_sets {best}
 create_delay_corner -name best -timing_condition {best} -rc_corner {best}
 
